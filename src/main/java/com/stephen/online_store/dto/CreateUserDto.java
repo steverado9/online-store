@@ -1,44 +1,34 @@
-package com.stephen.online_store.entity;
+package com.stephen.online_store.dto;
 
-import com.stephen.online_store.enums.Role;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
-@Entity
-@Table(name = "users")
-public class User {
+public class CreateUserDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @NotEmpty(message = "email should not be empty")
     private String email;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "password should not be empty")
     private String password;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "firstName should not be empty")
     private String firstName;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "lastName should not be empty")
     private String lastName;
 
-    @Column(nullable = false)
+    @NotEmpty(message = "phoneNumber should not be empty")
     private String phoneNumber;
 
-    @Column(nullable = false)
-    private Role Role;
+    public CreateUserDto() {}
 
-    public User() {
-    }
-
-    public User(String email, String password, String firstName, String lastName, String phoneNumber, Role role) {
+    public CreateUserDto(String email, String password, String firstName, String lastName, String phoneNumber) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        Role = role;
     }
 
     public Long getId() {
@@ -87,13 +77,5 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public Role getRole() {
-        return Role;
-    }
-
-    public void setRole(Role role) {
-        Role = role;
     }
 }

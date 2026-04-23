@@ -23,7 +23,18 @@ public class SecurityConfig {
         return http
                 .csrf(Customizer ->Customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .anyRequest().permitAll())
+                        .requestMatchers("/", "/login","/images/**", "/css/**", "/js/**").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .usernameParameter("email")
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                )
                 .build();
     }
 }
