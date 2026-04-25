@@ -48,6 +48,8 @@ public class UserController {
         user.setLastName(dto.getLastName());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setRole(Role.USER);
+
+        userService.saveUser(user);
         return "register";
     }
 }
