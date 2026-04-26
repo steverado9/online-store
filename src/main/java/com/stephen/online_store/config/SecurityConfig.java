@@ -23,7 +23,7 @@ public class SecurityConfig {
         return http
                 .csrf(Customizer ->Customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/", "/login","/images/**", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/dashboard", "/login", "/images/**", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .usernameParameter("email")

@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -18,7 +21,22 @@ public class ProductController {
 
     @GetMapping("/")
     public String home() {
-        return "dashboard";
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+        List<Product> products;
+
+        if(keyword != null && !keyword.isEmpty()) {
+            products = productService.searchProducts(keyword);
+        } else {
+            products = productService.getAllProducts();
+        }
+
+//        model.addAttribute("keyword", keyword);
+        model.addAttribute("products", products);
+        return "/dashboard";
     }
 
     @GetMapping("/add_product")

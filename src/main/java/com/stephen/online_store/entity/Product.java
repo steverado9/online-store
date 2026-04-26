@@ -13,7 +13,7 @@ public class Product {
     private String title;
 
     @Column(nullable = false)
-    private String price;
+    private Double price;
 
     @Column(nullable = false)
     private String description;
@@ -25,12 +25,12 @@ public class Product {
     private String image;
 
     @Column(nullable = false)
-    private String rating;
+    private Double rating;
 
     public Product() {
     }
 
-    public Product(String title, String price, String description, String category, String image, String rating) {
+    public Product(String title, Double price, String description, String category, String image, Double rating) {
         this.title = title;
         this.price = price;
         this.description = description;
@@ -55,11 +55,11 @@ public class Product {
         this.title = title;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -87,11 +87,11 @@ public class Product {
         this.image = image;
     }
 
-    public String getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 }

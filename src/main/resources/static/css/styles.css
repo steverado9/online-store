@@ -1,0 +1,8 @@
+ body {
+   font-family: 'Poppins', sans-serif;
+ }
+
+.carousel-img {
+    object-fit: cover;
+    height: 100%;
+}

@@ -10,7 +10,7 @@ public class ProductDto {
     private String title;
 
     @NotEmpty(message = "price should not be empty")
-    private String price;
+    private Double price;
 
     @NotEmpty(message = "description should not be empty")
     private String description;
@@ -22,12 +22,12 @@ public class ProductDto {
     private String image;
 
     @NotEmpty(message = "rating should not be empty")
-    private String rating;
+    private Double rating;
 
     public ProductDto() {
     }
 
-    public ProductDto(Long id, String title, String price, String description, String category, String image, String rating) {
+    public ProductDto(Long id, String title, Double price, String description, String category, String image, Double rating) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -53,11 +53,11 @@ public class ProductDto {
         this.title = title;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -85,11 +85,11 @@ public class ProductDto {
         this.image = image;
     }
 
-    public String getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 }
