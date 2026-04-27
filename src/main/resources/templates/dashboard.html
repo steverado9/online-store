@@ -106,6 +106,13 @@
                     <p class="card-text" th:text="${product.category}"></p>
                     <p class="card-text" th:text="${product.rating}"></p>
                 </div>
+                <form th:action="@{/product/delete/{id} (id=${product.id})}" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+
+                <button class="btn btn-warning" type="submit">Add to cart</button>
+                <a class="btn btn-success" type="submit" th:href="@{/product/{id} (id=${product.id})}">View more..</a>
             </div>
         </div>
     </div>

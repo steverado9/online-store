@@ -6,12 +6,10 @@ import com.stephen.online_store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController {
@@ -34,7 +32,6 @@ public class ProductController {
             products = productService.getAllProducts();
         }
 
-//        model.addAttribute("keyword", keyword);
         model.addAttribute("products", products);
         return "/dashboard";
     }
@@ -58,5 +55,25 @@ public class ProductController {
 
         productService.saveProduct(product);
         return "redirect:/dashboard";
+    }
+
+    @DeleteMapping("/product/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.deleteById(id);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/product/{id}")
+    public String viewProduct(@PathVariable Long id, Model model) {
+       try {
+           Product product = productService.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+
+           model.addAttribute("product", product);
+
+       } catch (RuntimeException e) {
+           model.addAttribute("error", e.getMessage());
+       }
+
+        return "product_details";
     }
 }
