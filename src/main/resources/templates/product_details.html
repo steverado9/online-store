@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
           rel="stylesheet">
@@ -82,21 +82,49 @@
         <div class="col-md-3">
             <div class="card h-100">
                 <ul class="list-group list-group-flush h-100">
-                    <li class="list-group-item">Appliances</li>
-                    <li class="list-group-item">Phones & Tablets</li>
-                    <li class="list-group-item">Health & Beauty</li>
-                    <li class="list-group-item">Home & Office</li>
-                    <li class="list-group-item">Electronics</li>
-                    <li class="list-group-item">Supermarket</li>
-                    <li class="list-group-item">Computing</li>
-                    <li class="list-group-item">Baby products</li>
-                    <li class="list-group-item">Gaming</li>
-                    <li class="list-group-item">Other categories</li>
+                    <li class="list-group-item">DELIVERY & RETURNS</li>
+                    <li class="list-group-item">
+                        <span>Online Express</span><br>
+                        <span>The BEST products, delivered faster. Now PAY on DELIVERY, Cash or Bank Transfer Anywhere, Zero Wahala!</span>
+                    </li>
+                    <li class="list-group-item">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Choose your Location</option>
+                            <option value="1">Lagos</option>
+                            <option value="2">Ibadan</option>
+                            <option value="3">Abuja</option>
+                        </select>
+                    </li>
                 </ul>
             </div>
         </div>
 
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script>
+    document.querySelectorAll(".delete-form").forEach(form => {
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
