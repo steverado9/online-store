@@ -3,25 +3,31 @@ package com.stephen.online_store.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "cartItems")
+@Table(name = "cart_items")
 public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long cartId;
+    // MANY cart items belong to ONE cart
+    @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
 
-    private Long productId;
+    // MANY cart items refer to ONE product
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
     private int quantity;
 
     public CartItem() {
     }
 
-    public CartItem(Long cartId, Long productId, int quantity) {
-        this.cartId = cartId;
-        this.productId = productId;
+    public CartItem(Cart cart, Product product, int quantity) {
+        this.cart = cart;
+        this.product = product;
         this.quantity = quantity;
     }
 
@@ -33,20 +39,20 @@ public class CartItem {
         this.id = id;
     }
 
-    public Long getCartId() {
-        return cartId;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {

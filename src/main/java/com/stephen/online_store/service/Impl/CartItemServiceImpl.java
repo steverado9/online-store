@@ -2,6 +2,7 @@ package com.stephen.online_store.service.Impl;
 
 import com.stephen.online_store.entity.Cart;
 import com.stephen.online_store.entity.CartItem;
+import com.stephen.online_store.entity.Product;
 import com.stephen.online_store.entity.User;
 import com.stephen.online_store.repository.CartItemRepository;
 import com.stephen.online_store.service.CartItemService;
@@ -17,15 +18,4 @@ public class CartItemServiceImpl implements CartItemService {
     @Autowired
     private CartItemRepository cartItemRepository;
 
-
-
-    @Override
-    public Optional<CartItem> findByCartIdAndProductId(Long cartId, Long productId) {
-        return cartItemRepository.findByCartIdAndProductId(cartId, productId);
-    }
-
-    @Override
-    public void saveItem(CartItem item) {
-        cartItemRepository.save(item);
-    }
 }

@@ -33,17 +33,24 @@ public class CartController {
     }
 
     @PostMapping("/cart/add/{id}")
-    public String addToCart(@PathVariable Long productId, Principal principal, Model model) {
+    public String addToCart(@PathVariable("id") Long productId, Principal principal, Model model) {
+
+        String email = principal.getName();
+        if (email == null) {
+            return "redirect:/login";
+        }
+
+        Optional<User> user = userService.findByEmail(email);
+
+        if(user.isEmpty()) {
+            return "redirect:/login";
+        }
+
         try {
-            String email = principal.getName();
-            User user = userService.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
-
-            cartService.addToCart(user, productId);
-
+            cartService.addToCart(user.get(), productId);
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
         }
-
         return "redirect:/cart";
     }
 }
