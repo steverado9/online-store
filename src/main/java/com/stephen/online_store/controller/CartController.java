@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,8 +29,24 @@ public class CartController {
     private UserService userService;
 
     @GetMapping("/cart")
-    public String cart() {
-//        List<Cart> carts =
+    public String viewCart(Model model, Principal principal) {
+
+        String email = principal.getName();
+        Optional<User> user = userService.findByEmail(email);
+
+        if(user.isEmpty()) {
+            return "redirect:/login";
+        }
+
+        Cart cart = cartService.getCartByUser(user.get());
+
+        List<CartItem> items = cart.getCartItems();
+
+        double total = cartService.getCartTotal(items);
+
+        model.addAttribute("items", items);
+        model.addAttribute("total", total);
+
         return "cart";
     }
 
@@ -51,6 +69,24 @@ public class CartController {
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
         }
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/cart/increase/{id}")
+    public String increaseQuantity(@PathVariable Long id) {
+        cartService.increaseQuantity(id);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/cart/decrease/{id}")
+    public String decreaseQuantity(@PathVariable Long id) {
+        cartService.decreaseQuantity(id);
+        return "redirect:/cart";
+    }
+
+    @DeleteMapping("/cart/delete/{id}")
+    public String deleteCartItem(@PathVariable Long id) {
+        cartService.deleteCartItem(id);
         return "redirect:/cart";
     }
 }

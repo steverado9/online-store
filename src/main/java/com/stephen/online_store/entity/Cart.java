@@ -2,6 +2,8 @@ package com.stephen.online_store.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "carts")
 public class Cart {
@@ -12,6 +14,9 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems;
 
     public Cart() {
     }
@@ -34,5 +39,13 @@ public class Cart {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }

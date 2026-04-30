@@ -12,6 +12,7 @@ import com.stephen.online_store.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,5 +51,48 @@ public class CartServiceImpl implements CartService {
 
                 cartItemRepository.save(newitem);
             }
+    }
+
+    @Override
+    public Cart getCartByUser(User user) {
+        return cartRepository.findByUserId(user.getId()).orElseGet(() -> {
+            Cart newCart = new Cart();
+            newCart.setUser(user);
+            return cartRepository.save(newCart);
+        });
+    }
+
+    @Override
+    public void increaseQuantity(Long cartItemId) {
+        CartItem item = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        item.setQuantity(item.getQuantity() + 1);
+        cartItemRepository.save(item);
+    }
+
+    @Override
+    public void decreaseQuantity(Long cartItemId) {
+        CartItem item = cartItemRepository.findById(cartItemId).orElseThrow(() -> new RuntimeException("Item not found"));
+
+        if (item.getQuantity() > 1) {
+            item.setQuantity(item.getQuantity() - 1);
+            cartItemRepository.save(item);
+        } else {
+            cartItemRepository.delete(item);
+        }
+
+    }
+
+    @Override
+    public void deleteCartItem(Long cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
+    }
+
+    @Override
+    public double getCartTotal(List<CartItem> items) {
+        return items.stream()
+                .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
+                .sum();
     }
 }
