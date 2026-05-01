@@ -1,0 +1,19 @@
+How to integrate payment Gateway
+1)Choose a payment gateway(Remita)
+2)Register on the platform and optain API keys
+3)Add dependencies in your pom.xml
+4)Configure API leys
+5)Store API keys securely
+6)Implement payment end point
+7)Create controller to handle payment request
+8)Test the payment in test mode befoe switching to live mode
+
+Todo
+-Register on remita website
+-after registrating go to overview -> dashboard ->Administration then Api keys and in Test mode
+
+To see cards
+In remita website
+click developers
+click accept payment
+test payment

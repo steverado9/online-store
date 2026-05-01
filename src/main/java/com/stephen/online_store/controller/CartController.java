@@ -42,6 +42,10 @@ public class CartController {
 
         List<CartItem> items = cart.getCartItems();
 
+        if (items == null) {
+            return "redirect:/login";
+        }
+
         double total = cartService.getCartTotal(items);
 
         model.addAttribute("items", items);
