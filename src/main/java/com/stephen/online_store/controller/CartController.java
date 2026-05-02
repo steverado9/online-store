@@ -2,9 +2,13 @@ package com.stephen.online_store.controller;
 
 import com.stephen.online_store.entity.Cart;
 import com.stephen.online_store.entity.CartItem;
+import com.stephen.online_store.entity.Order;
 import com.stephen.online_store.entity.User;
+import com.stephen.online_store.enums.Status;
+import com.stephen.online_store.remitaService.RemitaService;
 import com.stephen.online_store.service.CartItemService;
 import com.stephen.online_store.service.CartService;
+import com.stephen.online_store.service.OrderService;
 import com.stephen.online_store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,11 +20,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class CartController {
+
+    @Autowired
+    private RemitaService remitaService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private CartService cartService;
@@ -92,5 +104,52 @@ public class CartController {
     public String deleteCartItem(@PathVariable Long id) {
         cartService.deleteCartItem(id);
         return "redirect:/cart";
+    }
+
+    @PostMapping("/checkout")
+    public String checkout(Principal principal) {
+
+        String email = principal.getName();
+        Optional<User> user = userService.findByEmail(email);
+
+        if(user.isEmpty()) {
+            return "redirect:/login";
+        }
+
+        Cart cart = cartService.getCartByUser(user.get());
+
+        List<CartItem> items = cart.getCartItems();
+
+        if (items == null) {
+            return "redirect:/login";
+        }
+
+        double total = cartService.getCartTotal(items);
+
+        Order order = new Order();
+        order.setOrderNumber(UUID.randomUUID().toString());
+        order.setAmount(total);
+        order.setStatus(Status.PENDING);
+        order.setCreatedAt(LocalDateTime.now());
+
+        //dummy for now
+        order.setPayerName("Test User");
+        order.setPayerEmail("test@email.com");
+
+        //Save order first
+        //Then generate RRR
+        //If something fails, you do not  lose the order reference
+        orderService.saveOrder(order);
+
+        //generate RRR
+        String rrr = remitaService.generateRRR(order);
+
+        //save RRR
+        order.setRrr(rrr);
+        orderService.saveOrder(order);
+
+        //redirect
+        return "redirect:https://login.remita.net/remita/onepage/payment/init.reg?rrr=" + rrr;
+
     }
 }
