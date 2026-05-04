@@ -4,6 +4,8 @@ import com.stephen.online_store.dto.CreateUserDto;
 import com.stephen.online_store.entity.User;
 import com.stephen.online_store.enums.Role;
 import com.stephen.online_store.service.UserService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +18,10 @@ import java.util.Optional;
 @Controller
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
@@ -33,23 +37,30 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("userDto") CreateUserDto dto) {
+    public String registerUser(@ModelAttribute("userDto") CreateUserDto dto, Model model) {
 
         Optional<User> existingUser = userService.findByEmail(dto.getEmail());
 
         if (existingUser.isPresent()) {
+            model.addAttribute("error", "User already exists");
             return "redirect:/register";
         }
 
         User user = new User();
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setRole(Role.USER);
 
         userService.saveUser(user);
-        return "register";
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/dashboard";
     }
 }

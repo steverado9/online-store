@@ -29,8 +29,9 @@ public class SecurityConfig {
         return http
                 .csrf(Customizer ->Customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/", "/dashboard", "/login", "/images/**", "/css/**", "/js/**").permitAll()
-                        .anyRequest().authenticated())
+//                        .requestMatchers("/", "/dashboard", "/login", "/cart", "/register", "/images/**", "/css/**", "/js/**").permitAll()
+//                        .requestMatchers("/add_product").hasRole("ADMIN")
+                        .anyRequest().permitAll())
                 .formLogin(form -> form
                         .usernameParameter("email")
                         .loginPage("/login")

@@ -3,6 +3,7 @@ package com.stephen.online_store.controller;
 import com.stephen.online_store.dto.ProductDto;
 import com.stephen.online_store.entity.Product;
 import com.stephen.online_store.entity.User;
+import com.stephen.online_store.enums.Role;
 import com.stephen.online_store.service.ProductService;
 import com.stephen.online_store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,17 @@ public class ProductController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+    public String dashboard(@RequestParam(value = "keyword", required = false) String keyword, Model model, Principal principal) {
+
+        if (principal != null) {
+            String email = principal.getName();
+            Optional<User> existingUser = userService.findByEmail(email);
+            model.addAttribute("existingUser", existingUser.orElse(null));
+        } else {
+            model.addAttribute("existingUser", null);
+        }
+
+
         List<Product> products;
 
         if(keyword != null && !keyword.isEmpty()) {
@@ -43,7 +54,18 @@ public class ProductController {
     }
 
     @GetMapping("/add_product")
-    public String addProductForm(Model model) {
+    public String addProductForm(Model model, Principal principal) {
+
+        if (principal != null) {
+            return "redirect:/login";
+        }
+
+        String email = principal.getName();
+        User existingUser = userService.findByEmail(email).get();
+        if (existingUser.getRole() != Role.ADMIN) {
+            model.addAttribute("error", "Unauthorized");
+        }
+
         model.addAttribute("productDto", new ProductDto());
         return "add_product";
     }

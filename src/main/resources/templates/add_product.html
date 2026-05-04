@@ -22,15 +22,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/}">Dashboard</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/dashboard}">Dashboard</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Action
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Login</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -101,12 +101,11 @@
                     </div>
                 </form>
 
-                <div th:if="${param.success}">
-                    <p style="color:green;">Product created successfully!</p>
-                </div>
-
-                <div th:if="${param.error}">
-                    <p style="color:red;">Error creating product!</p>
+                <div th:if="${error}">
+                    <p th:text="${error}" style="color:red;"></p>
+                    <a th:href="@{/dashboard}" class="btn btn-warning mt-2">
+                        Start shopping
+                    </a>
                 </div>
             </div>
         </div>

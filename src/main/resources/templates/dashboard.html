@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Online Store</title>
@@ -18,20 +18,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link " th:href="@{/add_product}">Add product</a>
+                    <a sec:authorize="hasRole('ADMIN')" class="nav-link " th:href="@{/add_product}">Add product</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " th:href="@{/cart}">My Cart</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Action
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                       th:text="${existingUser != null ? 'Hello ' + existingUser.firstName : 'Account'}">
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
                         <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
-                        <li><a class="dropdown-item" th:href="@{/register}">register</a></li>
-
+                        <li th:if="${existingUser == null}"><a class="dropdown-item" th:href="@{/register}">register</a></li>
                     </ul>
                 </li>
             </ul>
@@ -109,7 +108,7 @@
                     <p class="card-text" th:text="${product.category}"></p>
                     <p class="card-text" th:text="${product.rating}"></p>
                 </div>
-                <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post" class="delete-form">
+                <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post" class="delete-form" sec:authorize="hasRole('ADMIN')">
                     <input type="hidden" name="_method" value="delete" />
                     <button class="btn btn-danger" type="submit">Delete</button>
                 </form>

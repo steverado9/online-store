@@ -15,3 +15,13 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+
+remita:
+  merchantId:
+  apiKey:
+  serviceTypeId:
+  baseUrl:
+  secretKey:
+
+server:
+  port: 0
