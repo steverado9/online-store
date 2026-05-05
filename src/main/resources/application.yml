@@ -17,11 +17,12 @@ spring:
     show-sql: true
 
 remita:
-  merchantId:
-  apiKey:
-  serviceTypeId:
-  baseUrl:
-  secretKey:
+  merchantId: ${merchantId}
+  apiKey: ${apiKey}
+  serviceTypeId: ${serviceTypeId}
+  baseUrl: ${baseUrl}
+  publicKey: ${publicKey}
+  secretKey: ${secretKey}
 
 server:
   port: 0

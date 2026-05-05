@@ -73,6 +73,12 @@ public class CartController {
     @PostMapping("/cart/add/{id}")
     public String addToCart(@PathVariable("id") Long productId, Principal principal, Model model) {
 
+        if (principal == null) {
+            model.addAttribute("items", List.of());
+            model.addAttribute("total", 0.0);
+            return "cart";
+        }
+
         String email = principal.getName();
         if (email == null) {
             return "redirect:/login";
@@ -116,17 +122,9 @@ public class CartController {
         String email = principal.getName();
         Optional<User> user = userService.findByEmail(email);
 
-        if(user.isEmpty()) {
-            return "redirect:/login";
-        }
-
         Cart cart = cartService.getCartByUser(user.get());
 
         List<CartItem> items = cart.getCartItems();
-
-        if (items == null) {
-            return "redirect:/login";
-        }
 
         double total = cartService.getCartTotal(items);
 
@@ -146,15 +144,13 @@ public class CartController {
         orderService.saveOrder(order);
 
         //generate RRR
-//        String rrr = remitaService.generateRRR(order);
+        String rrr = remitaService.generateRRR(order);
 
         //save RRR
-//        order.setRrr(rrr);
+        order.setRrr(rrr);
         orderService.saveOrder(order);
 
         //redirect
-//        return "redirect:https://login.remita.net/remita/onepage/payment/init.reg?rrr=" + rrr;
-
-        return "";
+        return "redirect:https://login.remita.net/remita/onepage/payment/init.reg?rrr=" + rrr;
     }
 }

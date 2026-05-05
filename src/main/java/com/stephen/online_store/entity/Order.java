@@ -22,7 +22,6 @@ public class Order {
     @Column(nullable = false)
     private Status status;
 
-    @Column(nullable = false)
     private String rrr;
 
     @Column(nullable = false)
