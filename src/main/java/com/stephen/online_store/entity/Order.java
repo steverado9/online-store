@@ -4,6 +4,7 @@ import com.stephen.online_store.enums.Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -14,36 +15,36 @@ public class Order {
     private Long id;
 
     @Column(nullable = false)
-    private String orderNumber;
+    private String userEmail;
 
     @Column(nullable = false)
-    private Double amount;
+    private Double totalAmount;
 
     @Column(nullable = false)
     private Status status;
 
-    private String rrr;
+    private String txRef;
 
     @Column(nullable = false)
-    private String payerName;
-
-    @Column(nullable = false)
-    private String payerEmail;
+    private String transactionId;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items;
+
     public Order() {
     }
 
-    public Order(String orderNumber, Double amount, Status status, String rrr, String payerName, String payerEmail, LocalDateTime createdAt) {
-        this.orderNumber = orderNumber;
-        this.amount = amount;
+    public Order(String userEmail, Double totalAmount, Status status, String txRef, String transactionId, LocalDateTime createdAt, List<OrderItem> items) {
+        this.userEmail = userEmail;
+        this.totalAmount = totalAmount;
         this.status = status;
-        this.rrr = rrr;
-        this.payerName = payerName;
-        this.payerEmail = payerEmail;
+        this.txRef = txRef;
+        this.transactionId = transactionId;
         this.createdAt = createdAt;
+        this.items = items;
     }
 
     public Long getId() {
@@ -54,20 +55,20 @@ public class Order {
         this.id = id;
     }
 
-    public String getOrderNumber() {
-        return orderNumber;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setOrderNumber(String orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public Status getStatus() {
@@ -78,28 +79,20 @@ public class Order {
         this.status = status;
     }
 
-    public String getRrr() {
-        return rrr;
+    public String getTxRef() {
+        return txRef;
     }
 
-    public void setRrr(String rrr) {
-        this.rrr = rrr;
+    public void setTxRef(String txRef) {
+        this.txRef = txRef;
     }
 
-    public String getPayerName() {
-        return payerName;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public void setPayerName(String payerName) {
-        this.payerName = payerName;
-    }
-
-    public String getPayerEmail() {
-        return payerEmail;
-    }
-
-    public void setPayerEmail(String payerEmail) {
-        this.payerEmail = payerEmail;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -108,5 +101,13 @@ public class Order {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 }

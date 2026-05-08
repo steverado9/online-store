@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -32,6 +33,7 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
+
         model.addAttribute("userDto", new CreateUserDto());
         return "register";
     }
@@ -54,7 +56,8 @@ public class UserController {
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setRole(Role.USER);
 
-        userService.saveUser(user);
+        userService.saveUser(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getRole());
+
         return "redirect:/dashboard";
     }
 

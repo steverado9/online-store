@@ -33,7 +33,7 @@ public class OnlineStoreApplication implements CommandLineRunner {
 			String encodedPassword = passwordEncoder.encode("12345");
 
 			User user1 = new User("isaac.stephen@example.com", encodedPassword, "Isaac", "Stephen", "08096502070", Role.ADMIN);
-			userRepository.save(user1);
+			userRepository.saveUser(user1.getEmail(), user1.getPassword(), user1.getFirstName(), user1.getLastName(), user1.getPhoneNumber(), user1.getRole());
 
 			Product product1 = new Product(
 					"Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -179,24 +179,24 @@ public class OnlineStoreApplication implements CommandLineRunner {
 					"https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_t.png",
 					4.7);
 
-			productRepository.save(product1);
-			productRepository.save(product2);
-			productRepository.save(product3);
-			productRepository.save(product4);
-			productRepository.save(product5);
-			productRepository.save(product6);
-			productRepository.save(product7);
-			productRepository.save(product8);
-			productRepository.save(product9);
-			productRepository.save(product10);
-			productRepository.save(product11);
-			productRepository.save(product12);
-			productRepository.save(product13);
-			productRepository.save(product14);
-			productRepository.save(product15);
-			productRepository.save(product16);
-			productRepository.save(product17);
-			productRepository.save(product18);
+			productRepository.saveProduct(product1.getTitle(), product1.getPrice(), product1.getDescription(), product1.getCategory(), product1.getImage(), product1.getRating());
+			productRepository.saveProduct(product2.getTitle(), product2.getPrice(), product2.getDescription(), product2.getCategory(), product2.getImage(), product2.getRating());
+			productRepository.saveProduct(product3.getTitle(), product3.getPrice(), product3.getDescription(), product3.getCategory(), product3.getImage(), product3.getRating());
+			productRepository.saveProduct(product4.getTitle(), product4.getPrice(), product4.getDescription(), product4.getCategory(), product4.getImage(), product4.getRating());
+			productRepository.saveProduct(product5.getTitle(), product5.getPrice(), product5.getDescription(), product5.getCategory(), product5.getImage(), product5.getRating());
+			productRepository.saveProduct(product6.getTitle(), product6.getPrice(), product6.getDescription(), product6.getCategory(), product6.getImage(), product6.getRating());
+			productRepository.saveProduct(product7.getTitle(), product7.getPrice(), product7.getDescription(), product7.getCategory(), product7.getImage(), product7.getRating());
+			productRepository.saveProduct(product8.getTitle(), product8.getPrice(), product8.getDescription(), product8.getCategory(), product8.getImage(), product8.getRating());
+			productRepository.saveProduct(product9.getTitle(), product9.getPrice(), product9.getDescription(), product9.getCategory(), product9.getImage(), product9.getRating());
+			productRepository.saveProduct(product10.getTitle(), product10.getPrice(), product10.getDescription(), product10.getCategory(), product10.getImage(), product10.getRating());
+			productRepository.saveProduct(product11.getTitle(), product11.getPrice(), product11.getDescription(), product11.getCategory(), product11.getImage(), product11.getRating());
+			productRepository.saveProduct(product12.getTitle(), product12.getPrice(), product12.getDescription(), product12.getCategory(), product12.getImage(), product12.getRating());
+			productRepository.saveProduct(product13.getTitle(), product13.getPrice(), product13.getDescription(), product13.getCategory(), product13.getImage(), product13.getRating());
+			productRepository.saveProduct(product14.getTitle(), product14.getPrice(), product14.getDescription(), product14.getCategory(), product14.getImage(), product14.getRating());
+			productRepository.saveProduct(product15.getTitle(), product15.getPrice(), product15.getDescription(), product15.getCategory(), product15.getImage(), product15.getRating());
+			productRepository.saveProduct(product16.getTitle(), product16.getPrice(), product16.getDescription(), product16.getCategory(), product16.getImage(), product16.getRating());
+			productRepository.saveProduct(product17.getTitle(), product17.getPrice(), product17.getDescription(), product17.getCategory(), product17.getImage(), product17.getRating());
+			productRepository.saveProduct(product18.getTitle(), product18.getPrice(), product18.getDescription(), product18.getCategory(), product18.getImage(), product18.getRating());
 
 			System.out.println("Default admin user and product created successfully.");
 		} else {

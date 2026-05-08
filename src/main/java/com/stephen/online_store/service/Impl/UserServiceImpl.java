@@ -1,6 +1,7 @@
 package com.stephen.online_store.service.Impl;
 
 import com.stephen.online_store.entity.User;
+import com.stephen.online_store.enums.Role;
 import com.stephen.online_store.repository.UserRepository;
 import com.stephen.online_store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public void saveUser(String email, String password, String firstname, String lastname, String phoneNumber, Role role) {
+        userRepository.saveUser(email, password, firstname, lastname, phoneNumber, role);
     }
 
     @Override

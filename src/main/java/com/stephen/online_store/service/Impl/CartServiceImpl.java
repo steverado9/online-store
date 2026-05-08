@@ -9,6 +9,7 @@ import com.stephen.online_store.repository.CartRepository;
 import com.stephen.online_store.repository.ProductRepository;
 import com.stephen.online_store.repository.UserRepository;
 import com.stephen.online_store.service.CartService;
+import com.stephen.online_store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,10 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private UserService userService;
+
+
     @Override
     public void addToCart(User user, Long productId) {
 
@@ -42,14 +47,14 @@ public class CartServiceImpl implements CartService {
             if (existingItem.isPresent()) {
                 CartItem item = existingItem.get();
                 item.setQuantity(item.getQuantity() + 1);
-                cartItemRepository.save(item);
+                cartItemRepository.saveCartItem(item.getQuantity(), item.getCart().getId(), item.getProduct().getId());
             } else {
                 CartItem newitem = new CartItem();
                 newitem.setCart(cart);
                 newitem.setProduct(product);
                 newitem.setQuantity(1);
 
-                cartItemRepository.save(newitem);
+                cartItemRepository.saveCartItem(newitem.getQuantity(), newitem.getCart().getId(), newitem.getProduct().getId());
             }
     }
 
@@ -58,7 +63,7 @@ public class CartServiceImpl implements CartService {
         return cartRepository.findByUserId(user.getId()).orElseGet(() -> {
             Cart newCart = new Cart();
             newCart.setUser(user);
-            return cartRepository.save(newCart);
+            return cartRepository.saveCart(newCart.getUser().getId());
         });
     }
 
@@ -94,5 +99,13 @@ public class CartServiceImpl implements CartService {
         return items.stream()
                 .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
                 .sum();
+    }
+
+    @Override
+    public void clearCart(String email) {
+        Optional<User> user = userService.findByEmail(email);
+
+        Cart cart = getCartByUser(user.get());
+        cartRepository.deleteById(cart.getId());
     }
 }

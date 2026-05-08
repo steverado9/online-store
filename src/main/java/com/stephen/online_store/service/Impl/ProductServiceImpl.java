@@ -15,10 +15,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-
     @Override
-    public void saveProduct(Product product) {
-        productRepository.save(product);
+    public void saveProduct(String title, Double price, String description, String category, String image, Double rating) {
+        productRepository.saveProduct(title, price, description, category, image, rating);
     }
 
     @Override

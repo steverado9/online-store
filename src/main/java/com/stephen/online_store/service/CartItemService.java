@@ -7,7 +7,5 @@ import com.stephen.online_store.entity.Product;
 import java.util.Optional;
 
 public interface CartItemService {
-//    Optional<CartItem> findByCartAndProduct(Cart cart, Product product);
 
-//    void saveItem(CartItem item);
 }

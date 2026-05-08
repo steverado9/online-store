@@ -56,13 +56,16 @@ public class ProductController {
     @GetMapping("/add_product")
     public String addProductForm(Model model, Principal principal) {
 
-        if (principal != null) {
+        if (principal == null) {
             return "redirect:/login";
         }
 
         String email = principal.getName();
-        User existingUser = userService.findByEmail(email).get();
-        if (existingUser.getRole() != Role.ADMIN) {
+        Optional<User> existingUser = userService.findByEmail(email);
+
+        existingUser.ifPresent(user -> model.addAttribute("existingUser", user));
+
+        if (existingUser.get().getRole() != Role.ADMIN) {
             model.addAttribute("error", "Unauthorized");
         }
 
@@ -81,7 +84,7 @@ public class ProductController {
         product.setImage(dto.getImage());
         product.setRating(dto.getRating());
 
-        productService.saveProduct(product);
+        productService.saveProduct(product.getTitle(), product.getPrice(), product.getDescription(), product.getCategory(), product.getImage(), product.getRating());
         return "redirect:/dashboard";
     }
 
@@ -94,16 +97,6 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public String viewProduct(@PathVariable Long id, Model model, Principal principal) {
        try {
-           String email = principal.getName();
-           if (email == null) {
-               return "redirect:/login";
-           }
-
-           Optional<User> user = userService.findByEmail(email);
-           if(user.isEmpty()) {
-               return "redirect:/login";
-           }
-
            Product product = productService.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
 
            model.addAttribute("product", product);
@@ -113,5 +106,50 @@ public class ProductController {
        }
 
         return "product_details";
+    }
+
+    @GetMapping("/product/edit/{id}")
+    private String editProduct (@PathVariable Long id, Model model, Principal principal) {
+
+            if(principal == null) {
+                return "redirect:/login";
+            }
+
+            String email = principal.getName();
+            Optional<User> user = userService.findByEmail(email);
+
+            if (user.isEmpty() || user.get().getRole() != Role.ADMIN) {
+                return "redirect:/login";
+            }
+
+            Optional<Product> product = productService.findById(id);
+            if (product.isEmpty()) {
+                model.addAttribute("error", new RuntimeException("product is empty"));
+            }
+
+            product.ifPresent(value -> model.addAttribute("product", value));
+
+        return "edit_product";
+    }
+
+    @PutMapping("/product/edit/{id}")
+    public String updateProduct(@PathVariable Long id, @ModelAttribute("product") Product product) {
+
+        Optional<Product> OptionalProduct = productService.findById(id);
+
+        if (OptionalProduct.isPresent()) {
+            Product existingProduct = OptionalProduct.get();
+            existingProduct.setId(id);
+            existingProduct.setImage(product.getImage());
+            existingProduct.setCategory(product.getCategory());
+            existingProduct.setDescription(product.getDescription());
+            existingProduct.setTitle(product.getTitle());
+            existingProduct.setRating(product.getRating());
+            existingProduct.setPrice(product.getPrice());
+
+            productService.saveProduct(existingProduct.getTitle(), existingProduct.getPrice(), existingProduct.getDescription(), existingProduct.getCategory(), existingProduct.getImage(), existingProduct.getRating());
+        }
+
+        return "redirect:/dashboard";
     }
 }

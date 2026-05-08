@@ -43,6 +43,11 @@
 <div class="container mt-4">
     <div class="row custom-height">
 
+        <!-- Error Message -->
+        <div th:if="${error}" class="alert alert-danger text-center">
+            <p th:text="${error}"></p>
+        </div>
+
         <!-- LEFT SIDE -->
         <div class="col-md-9">
             <div class="row" th:object="${product}">

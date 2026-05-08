@@ -16,13 +16,7 @@ spring:
       ddl-auto: create
     show-sql: true
 
-remita:
-  merchantId: ${merchantId}
-  apiKey: ${apiKey}
-  serviceTypeId: ${serviceTypeId}
-  baseUrl: ${baseUrl}
-  publicKey: ${publicKey}
-  secretKey: ${secretKey}
-
-server:
-  port: 0
+flutterwave:
+  public-key: ${publicKey}
+  secret-key: ${secretKey}
+  base-url: ${baseUrl}

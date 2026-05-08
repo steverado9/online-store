@@ -27,7 +27,7 @@ public class User {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private Role Role;
+    private Role role;
 
     public User() {
     }
@@ -38,7 +38,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        Role = role;
+        this.role = role;
     }
 
     public Long getId() {
@@ -90,10 +90,10 @@ public class User {
     }
 
     public Role getRole() {
-        return Role;
+        return role;
     }
 
     public void setRole(Role role) {
-        Role = role;
+        this.role = role;
     }
 }

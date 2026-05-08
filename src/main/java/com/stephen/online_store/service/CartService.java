@@ -20,4 +20,6 @@ public interface CartService {
     void deleteCartItem(Long id);
 
     double getCartTotal(List<CartItem> items);
+
+    void clearCart(String email);
 }

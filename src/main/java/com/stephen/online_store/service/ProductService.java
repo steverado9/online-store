@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    void saveProduct(Product product);
+    void saveProduct(String title, Double price, String description, String category, String image, Double rating);
 
     List<Product> getAllProducts();
 
