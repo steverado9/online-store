@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -32,6 +33,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "ORDER BY p.rating DESC",
             nativeQuery = true)
     List<Product> searchProducts(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT * FROM products", nativeQuery = true)
+    List<Product> findAll();
+
+    @Query(value = "SELECT * FROM products WHERE id = :id", nativeQuery = true)
+    Optional<Product> findById(@Param("id") Long id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM products WHERE id = :id", nativeQuery = true)
+    void deleteById(@Param("id") Long id);
 
 
 }

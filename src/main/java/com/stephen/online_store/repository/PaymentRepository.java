@@ -14,7 +14,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     @Transactional
     @Modifying
     @Query(value = """
-            INSERT INTO payments (tx_ref, email, amount, status, transactionId)
+            INSERT INTO payments (tx_ref, email, amount, status, transaction_id)
             VALUE(:txRef, :email, :amount, :status, :transactionId)
             """, nativeQuery = true)
     void savePayment(

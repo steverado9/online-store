@@ -73,7 +73,7 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new RuntimeException("Item not found"));
 
         item.setQuantity(item.getQuantity() + 1);
-        cartItemRepository.save(item);
+        cartItemRepository.saveCartItemQuantity(item.getQuantity(), cartItemId);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class CartServiceImpl implements CartService {
 
         if (item.getQuantity() > 1) {
             item.setQuantity(item.getQuantity() - 1);
-            cartItemRepository.save(item);
+            cartItemRepository.saveCartItemQuantity(item.getQuantity(), cartItemId);
         } else {
             cartItemRepository.delete(item);
         }
@@ -106,6 +106,8 @@ public class CartServiceImpl implements CartService {
         Optional<User> user = userService.findByEmail(email);
 
         Cart cart = getCartByUser(user.get());
+
+        cartItemRepository.deleteCartItemsByCartId(cart.getId());
         cartRepository.deleteById(cart.getId());
     }
 }

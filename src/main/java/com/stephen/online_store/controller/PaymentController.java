@@ -59,7 +59,7 @@ public class PaymentController {
         double total = cartService.getCartTotal(items);
 
         String txRef = "TX-" + System.currentTimeMillis();
-        Payment payment = new Payment(txRef, email, total, Status.PENDING, null);
+        Payment payment = new Payment(txRef, email, total, Status.PENDING, "");
         paymentService.savePayment(payment.getTxRef(), payment.getEmail(), payment.getAmount(), payment.getStatus(), payment.getTransactionId());
 
         String paymentLink = flutterwaveService.createPayment(email, "Customer", total, txRef);
@@ -90,10 +90,6 @@ public class PaymentController {
 
         //get saved payment
         Payment payment = paymentService.findByTxref(txRef).orElseThrow();
-
-//        if (paidAmount.doubleValue() != payment.getAmount()) {
-//            throw new RuntimeException("Amount mismatch! Possible fraud.");
-//        }
 
         // Prevent duplicate processing
         if (Status.SUCCESS.equals(payment.getStatus())) {

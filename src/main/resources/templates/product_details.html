@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Product Details</title>
@@ -57,11 +57,7 @@
                     <div class="card h-100">
                         <img th:src="${product.image}" class="card-img-top" alt="Product Image">
                         <div class="card-body text-center">
-
-                            <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post">
-                                <input type="hidden" name="_method" value="delete" />
-                                <button class="btn btn-danger mb-2" type="submit">Delete</button>
-                            </form>
+                            <a sec:authorize="hasRole('ADMIN')" type="submit" th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-danger mb-2">Edit</a>
 
                             <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">
                                 <button class="btn btn-warning" type="submit">Add to cart</button>
@@ -111,29 +107,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-<script>
-    document.querySelectorAll(".delete-form").forEach(form => {
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            Swal.fire({
-                title: "Are you sure?",
-                text: "This action cannot be undone!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        });
-    });
-</script>
 
 </body>
 </html>
