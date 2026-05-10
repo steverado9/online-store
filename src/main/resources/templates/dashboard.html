@@ -54,16 +54,34 @@
         <div class="col-md-3">
             <div class="card h-100">
                 <ul class="list-group list-group-flush h-100">
-                    <li class="list-group-item">Appliances</li>
-                    <li class="list-group-item">Phones & Tablets</li>
-                    <li class="list-group-item">Health & Beauty</li>
-                    <li class="list-group-item">Home & Office</li>
-                    <li class="list-group-item">Electronics</li>
-                    <li class="list-group-item">Supermarket</li>
-                    <li class="list-group-item">Computing</li>
-                    <li class="list-group-item">Baby products</li>
-                    <li class="list-group-item">Gaming</li>
-                    <li class="list-group-item">Other categories</li>
+                    <li class="list-group-item">
+                        <a th:href="@{/}" class="d-flex" role="search">Official store</a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <form th:action="@{/dashboard}" class="d-flex" role="search">
+                            <input type="hidden" class="form-control me-2" name="keyword" value="electronics" />
+                            <button class="btn btn-outline-success" type="submit">Electronics</button>
+                        </form>
+                    </li>
+                    <li class="list-group-item">
+                        <form th:action="@{/dashboard}" class="d-flex" role="search">
+                            <input type="hidden" class="form-control me-2" name="keyword" value="Men's Clothing"/>
+                            <button class="btn btn-outline-success" type="submit">Men's Wear</button>
+                        </form>
+                    </li>
+                    <li class="list-group-item">
+                        <form th:action="@{/dashboard}" class="d-flex" role="search">
+                            <input type="hidden" class="form-control me-2" name="keyword" value="Women's Clothing"/>
+                            <button class="btn btn-outline-success" type="submit">Women's Wear</button>
+                        </form>
+                    </li>
+                    <li class="list-group-item">
+                        <form th:action="@{/dashboard}" class="d-flex" role="search">
+                            <input type="hidden" class="form-control me-2" name="keyword" value="Jewelery"/>
+                            <button class="btn btn-outline-success" type="submit">Jewelery</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -138,30 +156,9 @@
                 </div>
 
             </div>
-            <!--        <div class="col-md-3 mb-4" th:each="product : ${products}">-->
-            <!--            <div class="card h-100">-->
-            <!--                <img th:src="${product.image}" class="card-img-top" alt="Product Image">-->
-            <!--                <div class="card-body">-->
-            <!--                    <h5 class="card-title" th:text="${product.title}"></h5>-->
-            <!--                    <p class="card-text fw-bold" th:text="${product.price}"></p>-->
-            <!--                    <p class="card-text" th:text="${product.description}"></p>-->
-            <!--                    <p class="card-text" th:text="${product.category}"></p>-->
-            <!--                    <p class="card-text" th:text="${product.rating}"></p>-->
-            <!--                </div>-->
-            <!--                <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post" class="delete-form"-->
-            <!--                      sec:authorize="hasRole('ADMIN')">-->
-            <!--                    <input type="hidden" name="_method" value="delete"/>-->
-            <!--                    <button class="btn btn-danger" type="submit">Delete</button>-->
-            <!--                </form>-->
-
-            <!--                <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">-->
-            <!--                    <button class="btn btn-warning" type="submit">Add to cart</button>-->
-            <!--                </form>-->
-            <!--                <a class="btn btn-success" type="submit" th:href="@{/product/{id} (id=${product.id})}">View more..</a>-->
-            <!--            </div>-->
-            <!--        </div>-->
         </div>
     </div>
+</div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
