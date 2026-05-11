@@ -85,42 +85,99 @@
 
         <!-- RIGHT SIDE (CATEGORIES) -->
         <div class="col-md-3">
-            <div class="card h-100">
-                <ul class="list-group list-group-flush h-100">
-                    <li class="list-group-item">DELIVERY & RETURNS</li>
-                    <li class="list-group-item">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Choose your Location</option>
-                            <option value="1">Lagos</option>
-                            <option value="2">Ibadan</option>
-                            <option value="3">Abuja</option>
-                        </select>
-                    </li>
-                    <li class="list-group-item">
-                        <select class="form-select" aria-label="Default select example">
-                            <option value="1">OSHODI-BOLADE</option>
-                            <option value="2">IKEJA</option>
-                            <option value="3">LEKKI</option>
-                        </select>
-                    </li>
-                    <div>
-                        <p>Pick up station</p>
-                        <small>Delivery fee</small>
-                    </div>
-                    <div>
-                        <p>Door delivery</p>
-                        <small>Delivery fee</small>
-                    </div>
-                    <div>
-                        <p>Return policy</p>
-                        <small>Free return within 7 days for ALL eligible items</small>
-                    </div>
-                    <div>
-                        <p>Warranty</p>
-                        <small>1 year and 6 months warranty validity period</small>
-                    </div>
+            <!-- Bootstrap Icons CDN -->
+            <link rel="stylesheet"
+                  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-                </ul>
+            <!-- RIGHT SIDE (DELIVERY & RETURNS) -->
+            <div class="">
+                <div class="card h-100">
+                    <ul class="list-group list-group-flush">
+
+                        <!-- Header -->
+                        <li class="list-group-item fw-bold">
+                            DELIVERY & RETURNS
+                        </li>
+
+                        <!-- Location -->
+                        <li class="list-group-item">
+                            <select class="form-select">
+                                <option selected>Choose your Location</option>
+                                <option>Lagos</option>
+                                <option>Ibadan</option>
+                                <option>Abuja</option>
+                            </select>
+                        </li>
+
+                        <!-- Area -->
+                        <li class="list-group-item">
+                            <select class="form-select">
+                                <option selected>OSHODI-BOLADE</option>
+                                <option>IKEJA</option>
+                                <option>LEKKI</option>
+                            </select>
+                        </li>
+
+                        <!-- Pick Up Station -->
+                        <li class="list-group-item">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-shop fs-4 me-3 text-secondary"></i>
+                                <div>
+                                    <p class="mb-1 fw-semibold">Pick Up Station</p>
+                                    <small class="text-muted d-block">
+                                        Delivery fee ₦700
+                                    </small>
+                                    <small class="text-muted">
+                                        Ready for pickup between 13 May and 14 May.
+                                    </small>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Door Delivery -->
+                        <li class="list-group-item">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-truck fs-4 me-3 text-secondary"></i>
+                                <div>
+                                    <p class="mb-1 fw-semibold">Door Delivery</p>
+                                    <small class="text-muted d-block">
+                                        Delivery fee ₦1,500
+                                    </small>
+                                    <small class="text-muted">
+                                        Ready for delivery between 13 May and 14 May.
+                                    </small>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Return Policy -->
+                        <li class="list-group-item">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-arrow-counterclockwise fs-4 me-3 text-secondary"></i>
+                                <div>
+                                    <p class="mb-1 fw-semibold">Return Policy</p>
+                                    <small class="text-muted">
+                                        Free return within 7 days for all eligible items.
+                                    </small>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Warranty -->
+                        <li class="list-group-item">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-shield-check fs-4 me-3 text-secondary"></i>
+                                <div>
+                                    <p class="mb-1 fw-semibold">Warranty</p>
+                                    <small class="text-muted">
+                                        1 year and 6 months warranty validity period.
+                                    </small>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
         </div>
 
